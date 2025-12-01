@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Product | Эксклюзивное Предложение</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 50px); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6b21a8 0%, #cb2d3e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        /* Custom WB Gradient for buttons */
+        .btn-wb {
+            background: linear-gradient(90deg, #cb11ab 0%, #481173 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-wb:hover {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(203, 17, 171, 0.3);
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee {
+            animation: marquee 20s linear infinite;
+        }
+    </style>
+</head>
+<body class="text-gray-800 overflow-x-hidden relative">
+
+    <!-- Background Blobs -->
+    <div class="blob bg-purple-400 w-96 h-96 top-0 left-0"></div>
+    <div class="blob bg-pink-300 w-80 h-80 bottom-0 right-0 animation-delay-2000"></div>
+    <div class="blob bg-blue-300 w-64 h-64 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 glass-panel border-b border-white/20">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-tighter">
+                STYLE<span class="text-purple-600">WB</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-semibold text-gray-600">
+                <a href="#features" class="hover:text-purple-600 transition">Преимущества</a>
+                <a href="#details" class="hover:text-purple-600 transition">Детали</a>
+                <a href="#reviews" class="hover:text-purple-600 transition">Отзывы</a>
+            </div>
+            <a href="https://www.wildberries.ru/catalog/484452230/detail.aspx" target="_blank" class="btn-wb text-white px-6 py-2 rounded-full font-medium text-sm">
+                Купить на WB
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 container mx-auto flex flex-col md:flex-row items-center justify-center gap-12 min-h-screen">
+        <div class="md:w-1/2 space-y-8 text-center md:text-left z-10">
+            <span class="inline-block py-1 px-3 rounded-full bg-purple-100 text-purple-700 text-xs font-bold tracking-wide uppercase mb-2">
+                Хит продаж
+            </span>
+            <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+                Ваш идеальный выбор <br>
+                <span class="gradient-text">на каждый день</span>
+            </h1>
+            <p class="text-lg text-gray-600 leading-relaxed max-w-lg mx-auto md:mx-0">
+                Откройте для себя сочетание безупречного стиля и высокого качества. Этот товар создан, чтобы дарить комфорт и уверенность в любой ситуации.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a href="https://www.wildberries.ru/catalog/484452230/detail.aspx" target="_blank" class="btn-wb text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fas fa-shopping-bag"></i> Заказать сейчас
+                </a>
+                <a href="#features" class="bg-white/50 hover:bg-white text-gray-800 px-8 py-4 rounded-full font-bold text-lg transition border border-white/60 backdrop-blur-sm flex items-center justify-center">
+                    Узнать больше
+                </a>
+            </div>
+            <div class="flex items-center justify-center md:justify-start gap-4 pt-4 text-sm text-gray-500">
+                <div class="flex items-center gap-1">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <span class="font-bold text-gray-800">4.9</span> рейтинг
+                </div>
+                <div class="w-1 h-1 bg-gray-400 rounded-full"></div>
+                <div>Более 1000+ заказов</div>
+            </div>
+        </div>
+
+        <div class="md:w-1/2 relative z-10">
+            <div class="relative">
+                <!-- Main Image Card -->
+                <div class="product-card bg-white p-4 rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition duration-500">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden relative bg-gray-100">
+                        <img src="https://basket-26.wbbasket.ru/vol4844/part484452/484452230/images/c246x328/3.webp" 
+                             alt="Product Image" 
+                             class="w-full h-full object-cover transform hover:scale-110 transition duration-700">
+                        
+                        <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl shadow-lg">
+                            <span class="text-xs text-gray-500 block">Цена со скидкой</span>
+                            <span class="text-xl font-bold text-purple-700">Лучшая цена 🔥</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Decorative Elements behind image -->
+                <div class="absolute -z-10 top-10 -right-10 w-full h-full border-2 border-purple-200 rounded-3xl"></div>
+                <div class="absolute -z-10 -bottom-5 -left-5 w-24 h-24 bg-yellow-200 rounded-full blur-xl opacity-50"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-20 bg-white/50 backdrop-blur-sm">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Почему выбирают нас?</h2>
+                <p class="text-gray-500 max-w-xl mx-auto">Мы уделяем внимание каждой детали, чтобы вы получали только лучшее.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition border border-gray-100">
+                    <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-2xl mb-6">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Премиум качество</h3>
+                    <p class="text-gray-500 leading-relaxed">
+                        Используем только высококачественные материалы, прошедшие строгий контроль. Долговечность и стиль в каждом элементе.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition border border-gray-100">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-2xl mb-6">
+                        <i class="fas fa-truck-fast"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Быстрая доставка</h3>
+                    <p class="text-gray-500 leading-relaxed">
+                        Мгновенная отгрузка со складов Wildberries. Получите свой заказ в ближайшем пункте выдачи в кратчайшие сроки.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition border border-gray-100">
+                    <div class="w-14 h-14 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 text-2xl mb-6">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Легкий возврат</h3>
+                    <p class="text-gray-500 leading-relaxed">
+                        Не подошло? Верните товар без лишних вопросов в соответствии с правилами платформы. Мы ценим ваш комфорт.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Showcase (Marquee) -->
+    <div class="py-10 overflow-hidden bg-purple-900 text-white">
+        <div class="flex space-x-12 animate-marquee whitespace-nowrap opacity-80 text-4xl font-bold uppercase tracking-wider w-max">
+            <!-- Block 1 -->
+            <span>Стиль</span> <span>•</span> <span>Качество</span> <span>•</span> <span>Комфорт</span> <span>•</span> <span>Эксклюзив</span> <span>•</span>
+            <span>Стиль</span> <span>•</span> <span>Качество</span> <span>•</span> <span>Комфорт</span> <span>•</span> <span>Эксклюзив</span> <span>•</span>
+            <span>Стиль</span> <span>•</span> <span>Качество</span> <span>•</span> <span>Комфорт</span> <span>•</span> <span>Эксклюзив</span> <span>•</span>
+            <span>Стиль</span> <span>•</span> <span>Качество</span> <span>•</span> <span>Комфорт</span> <span>•</span> <span>Эксклюзив</span> <span>•</span>
+            
+            <!-- Block 2 (Duplicate of Block 1) -->
+            <span>Стиль</span> <span>•</span> <span>Качество</span> <span>•</span> <span>Комфорт</span> <span>•</span> <span>Эксклюзив</span> <span>•</span>
+            <span>Стиль</span> <span>•</span> <span>Качество</span> <span>•</span> <span>Комфорт</span> <span>•</span> <span>Эксклюзив</span> <span>•</span>
+            <span>Стиль</span> <span>•</span> <span>Качество</span> <span>•</span> <span>Комфорт</span> <span>•</span> <span>Эксклюзив</span> <span>•</span>
+            <span>Стиль</span> <span>•</span> <span>Качество</span> <span>•</span> <span>Комфорт</span> <span>•</span> <span>Эксклюзив</span> <span>•</span>
+        </div>
+    </div>
+
+    <!-- Info/Details Section -->
+    <section id="details" class="py-20 container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center gap-16">
+            <div class="md:w-1/2 order-2 md:order-1">
+                <img src="https://basket-26.wbbasket.ru/vol4844/part484452/484452230/images/c246x328/3.webp" class="rounded-3xl shadow-2xl w-full max-w-md mx-auto object-cover grayscale hover:grayscale-0 transition duration-500">
+            </div>
+            <div class="md:w-1/2 order-1 md:order-2 space-y-6">
+                <h2 class="text-3xl md:text-4xl font-bold">Внимание к деталям</h2>
+                <p class="text-gray-600 text-lg">
+                    Этот товар разработан с учетом последних трендов и потребностей пользователей. Универсальный дизайн позволяет сочетать его с любым образом, а надежная конструкция гарантирует долгий срок службы.
+                </p>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span class="font-medium">Гипоаллергенные материалы</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span class="font-medium">Современный крой и дизайн</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span class="font-medium">Идеально для подарка</span>
+                    </li>
+                </ul>
+                <div class="pt-4">
+                    <a href="https://www.wildberries.ru/catalog/484452230/detail.aspx" target="_blank" class="text-purple-700 font-bold hover:underline flex items-center gap-2">
+                        Перейти к характеристикам <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Placeholder -->
+    <section id="reviews" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Отзывы довольных покупателей</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-2 mb-4 text-yellow-400">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Отличная вещь! Полностью соответствует описанию и фото. Доставили очень быстро, упаковка надежная. Рекомендую к покупке!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">А</div>
+                        <div>
+                            <p class="font-bold text-sm">Анна К.</p>
+                            <p class="text-xs text-gray-400">Куплено на Wildberries</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-2 mb-4 text-yellow-400">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Качество на высоте. Очень приятно удивлена. Выглядит дороже своей цены. Буду заказывать еще в другом цвете."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">Е</div>
+                        <div>
+                            <p class="font-bold text-sm">Елена М.</p>
+                            <p class="text-xs text-gray-400">Куплено на Wildberries</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm hidden lg:block">
+                    <div class="flex items-center gap-2 mb-4 text-yellow-400">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Покупкой доволен. Удобно, стильно. Продавец быстро отправил товар. Спасибо!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">М</div>
+                        <div>
+                            <p class="font-bold text-sm">Максим С.</p>
+                            <p class="text-xs text-gray-400">Куплено на Wildberries</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Footer -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-800 to-indigo-900 z-0"></div>
+        <!-- Abstract shapes -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full border-4 border-white/10 z-0"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-white/5 blur-3xl z-0"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center text-white">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Готовы обновить свой стиль?</h2>
+            <p class="text-xl text-purple-100 mb-10 max-w-2xl mx-auto">Закажите сейчас и получите лучшую цену на Wildberries. Количество товара ограничено.</p>
+            <a href="https://www.wildberries.ru/catalog/484452230/detail.aspx" target="_blank" class="inline-block bg-white text-purple-900 px-10 py-4 rounded-full font-bold text-xl hover:bg-gray-100 transition shadow-xl transform hover:-translate-y-1">
+                Перейти в магазин
+            </a>
+            <p class="mt-6 text-sm text-purple-300 opacity-70">Безопасная оплата и гарантия качества от маркетплейса</p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="font-bold text-white">STYLE<span class="text-purple-500">WB</span></span> © 2023. Все права защищены.
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-white transition">Политика конфиденциальности</a>
+                <a href="#" class="hover:text-white transition">Условия использования</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Simple animation for elements appearing on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section h2, section p, .product-card').forEach((el) => {
+            el.classList.add('transition', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

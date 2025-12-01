@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Dark Collection - WB Edition</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Montserrat:wght@200;400;600&display=swap');
+        
+        :root {
+            --bg-dark: #050505;
+            --bg-card: #121212;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-main: #e5e5e5;
+            --text-muted: #a3a3a3;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Gold Text Gradient */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Buttons */
+        .btn-gold {
+            background: linear-gradient(45deg, #d4af37, #aa771c);
+            color: #000;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+        
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: #fff;
+            z-index: -1;
+            transition: all 0.4s;
+            opacity: 0.2;
+        }
+        
+        .btn-gold:hover::before {
+            width: 100%;
+        }
+        
+        .btn-outline-gold {
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: var(--gold);
+            background: transparent;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-gold:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        /* Marquee Animation */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
+
+        /* Image Hover Effects */
+        .image-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-card img {
+            transition: transform 0.7s ease;
+        }
+        
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .glass-dark {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#d4af37] selection:text-black">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="container mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="#" class="text-2xl serif-font font-bold tracking-widest text-white">
+                NOIR<span class="text-[#d4af37]">.</span>EDITION
+            </a>
+            
+            <div class="hidden md:flex space-x-8 text-xs tracking-[0.2em] uppercase font-medium text-gray-400">
+                <a href="#gallery" class="hover:text-[#d4af37] transition-colors">Коллекция</a>
+                <a href="#features" class="hover:text-[#d4af37] transition-colors">Детали</a>
+                <a href="#reviews" class="hover:text-[#d4af37] transition-colors">Отзывы</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="https://www.wildberries.ru/catalog/168550639/detail.aspx?targetUrl=MI" class="hidden md:inline-block px-6 py-2 border border-[#d4af37] text-[#d4af37] text-xs font-bold uppercase tracking-widest hover:bg-[#d4af37] hover:text-black transition duration-300">
+                    В корзину
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-2xl text-white">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black z-40 flex flex-col items-center justify-center space-y-8 transform translate-x-full transition-transform duration-500 ease-in-out md:hidden border-l border-white/10">
+            <button id="close-menu" class="absolute top-6 right-6 text-3xl text-gray-500 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="#gallery" class="text-3xl serif-font text-white" onclick="toggleMenu()">Коллекция</a>
+            <a href="#features" class="text-3xl serif-font text-white" onclick="toggleMenu()">Детали</a>
+            <a href="#reviews" class="text-3xl serif-font text-white" onclick="toggleMenu()">Отзывы</a>
+            <a href="https://www.wildberries.ru/catalog/168550639/detail.aspx?targetUrl=MI" class="btn-gold px-10 py-4 text-sm font-bold uppercase tracking-widest mt-8">
+                Перейти на WB
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Dark Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://basket-12.wbbasket.ru/vol1685/part168550/168550639/images/big/12.webp" class="w-full h-full object-cover opacity-60 scale-110 animate-[pulse_10s_ease-in-out_infinite]">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-[#050505]"></div>
+        </div>
+
+        <div class="relative z-10 container mx-auto px-6 text-center">
+            <div class="mb-6 flex justify-center items-center gap-4 reveal">
+                <span class="h-[1px] w-16 bg-[#d4af37]"></span>
+                <span class="text-[#d4af37] uppercase tracking-[0.3em] text-sm font-semibold">Exclusive Series</span>
+                <span class="h-[1px] w-16 bg-[#d4af37]"></span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-9xl font-bold text-white mb-8 tracking-tighter leading-none reveal delay-100">
+                THE <span class="text-gold-gradient serif-font italic">DARK</span><br>AESTHETIC
+            </h1>
+            
+            <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed reveal delay-200">
+                Воплощение стиля и бескомпромиссного качества. Создано для тех, кто предпочитает выразительную лаконичность.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-6 reveal delay-300">
+                <a href="https://www.wildberries.ru/catalog/168550639/detail.aspx?targetUrl=MI" class="btn-gold px-12 py-4 font-bold text-sm uppercase tracking-widest shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+                    Купить Сейчас
+                </a>
+                <a href="#gallery" class="btn-outline-gold px-12 py-4 font-bold text-sm uppercase tracking-widest">
+                    Смотреть Обзор
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+    </header>
+
+    <!-- Running Text Marquee -->
+    <div class="bg-[#d4af37] py-3 border-y border-white/10 overflow-hidden">
+        <div class="marquee-container flex items-center">
+            <div class="marquee-content flex items-center text-black font-bold text-sm tracking-[0.2em] uppercase">
+                <span class="mx-8">• PREMIUM QUALITY</span>
+                <span class="mx-8">• LIMITED EDITION</span>
+                <span class="mx-8">• NEW COLLECTION 2024</span>
+                <span class="mx-8">• FAST DELIVERY</span>
+                <span class="mx-8">• STYLE & COMFORT</span>
+                <span class="mx-8">• PREMIUM QUALITY</span>
+                <span class="mx-8">• LIMITED EDITION</span>
+                <span class="mx-8">• NEW COLLECTION 2024</span>
+                <span class="mx-8">• FAST DELIVERY</span>
+                <span class="mx-8">• STYLE & COMFORT</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery / About Section -->
+    <section id="gallery" class="py-32 bg-[#050505] relative">
+        <!-- Decor -->
+        <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-[#111] to-transparent -z-10 opacity-50"></div>
+
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16 mb-24">
+                <div class="lg:w-1/2 reveal">
+                    <div class="relative">
+                        <div class="absolute -inset-4 border border-[#d4af37]/30 rounded-none z-0"></div>
+                        <img src="https://basket-12.wbbasket.ru/vol1685/part168550/168550639/images/big/1.webp" alt="Product Front" class="relative z-10 w-full shadow-2xl filter brightness-90 hover:brightness-100 transition duration-500">
+                    </div>
+                </div>
+                <div class="lg:w-1/2 reveal delay-100">
+                    <h2 class="text-4xl lg:text-5xl text-white mb-8 leading-tight">
+                        Совершенство <br>
+                        <span class="text-[#d4af37] serif-font italic">в каждой линии</span>
+                    </h2>
+                    <p class="text-gray-400 leading-8 mb-8 font-light text-lg">
+                        Мы переосмыслили классику, добавив современные акценты. Глубокий цвет, премиальные материалы и внимание к фурнитуре делают эту вещь незаменимой основой вашего гардероба.
+                    </p>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-4 text-gray-300">
+                            <span class="w-2 h-2 bg-[#d4af37]"></span>
+                            <span>Высококачественные материалы</span>
+                        </li>
+                        <li class="flex items-center gap-4 text-gray-300">
+                            <span class="w-2 h-2 bg-[#d4af37]"></span>
+                            <span>Идеальная посадка по фигуре</span>
+                        </li>
+                        <li class="flex items-center gap-4 text-gray-300">
+                            <span class="w-2 h-2 bg-[#d4af37]"></span>
+                            <span>Устойчивость к износу</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Grid Images -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <div class="image-card group reveal h-[400px] md:h-[500px]">
+                    <img src="https://basket-12.wbbasket.ru/vol1685/part168550/168550639/images/big/2.webp" class="w-full h-full object-cover opacity-80 group-hover:opacity-100">
+                    <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
+                        <p class="text-[#d4af37] tracking-widest text-xs uppercase">View 01</p>
+                    </div>
+                </div>
+                <div class="image-card group reveal delay-100 h-[400px] md:h-[500px] md:-mt-12">
+                    <img src="https://basket-12.wbbasket.ru/vol1685/part168550/168550639/images/big/3.webp" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 border border-[#d4af37]/20">
+                    <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
+                        <p class="text-[#d4af37] tracking-widest text-xs uppercase">View 02</p>
+                    </div>
+                </div>
+                <div class="image-card group reveal delay-200 h-[400px] md:h-[500px]">
+                    <img src="https://basket-12.wbbasket.ru/vol1685/part168550/168550639/images/big/4.webp" class="w-full h-full object-cover opacity-80 group-hover:opacity-100">
+                    <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
+                        <p class="text-[#d4af37] tracking-widest text-xs uppercase">View 03</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Dark Cards -->
+    <section id="features" class="py-24 bg-[#0a0a0a]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <span class="text-[#d4af37] text-xs tracking-[0.3em] uppercase font-bold mb-4 block">Why Choose Us</span>
+                <h2 class="text-4xl text-white serif-font">Преимущества</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass-dark p-10 hover:bg-[#1a1a1a] transition duration-500 group reveal border-t border-transparent hover:border-[#d4af37]">
+                    <div class="text-4xl text-[#d4af37] mb-6 opacity-50 group-hover:opacity-100 transition">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="text-xl text-white mb-4 font-bold">Эксклюзивность</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">
+                        Лимитированная серия. Мы производим небольшие партии, чтобы гарантировать уникальность каждого изделия.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-dark p-10 hover:bg-[#1a1a1a] transition duration-500 group reveal delay-100 border-t border-transparent hover:border-[#d4af37]">
+                    <div class="text-4xl text-[#d4af37] mb-6 opacity-50 group-hover:opacity-100 transition">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="text-xl text-white mb-4 font-bold">Быстрая доставка</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">
+                        Благодаря логистике Wildberries, вы получите свой заказ в кратчайшие сроки в любом пункте выдачи.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-dark p-10 hover:bg-[#1a1a1a] transition duration-500 group reveal delay-200 border-t border-transparent hover:border-[#d4af37]">
+                    <div class="text-4xl text-[#d4af37] mb-6 opacity-50 group-hover:opacity-100 transition">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h3 class="text-xl text-white mb-4 font-bold">Гарантия возврата</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">
+                        Вы можете примерить вещь перед покупкой и бесплатно вернуть, если она вам не подойдет.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-24 bg-[#050505] relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#d4af37] rounded-full filter blur-[150px] opacity-5 -z-0"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <h2 class="text-4xl text-white serif-font">Мнения покупателей</h2>
+                <div class="flex gap-4 mt-6 md:mt-0">
+                    <button id="prev-review" class="w-12 h-12 border border-white/20 text-white hover:border-[#d4af37] hover:text-[#d4af37] transition flex items-center justify-center rounded-full">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="next-review" class="w-12 h-12 border border-white/20 text-white hover:border-[#d4af37] hover:text-[#d4af37] transition flex items-center justify-center rounded-full">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex overflow-x-auto snap-x scrollbar-hide gap-6 pb-8" id="reviews-scroll" style="scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;">
+                <!-- Review 1 -->
+                <div class="min-w-[300px] md:min-w-[400px] bg-[#121212] p-8 border border-white/5 snap-center">
+                    <div class="flex text-[#d4af37] mb-6 text-xs gap-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic mb-6 text-lg font-serif">"Потрясающее качество. Ткань плотная, цвет глубокий черный, как я и хотел. Выглядит очень дорого."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-[#d4af37] rounded-full flex items-center justify-center text-black font-bold">М</div>
+                        <div>
+                            <p class="text-white font-bold text-sm">Максим Д.</p>
+                            <p class="text-xs text-gray-500">WB Клиент</p>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Review 2 -->
+                 <div class="min-w-[300px] md:min-w-[400px] bg-[#121212] p-8 border border-white/5 snap-center">
+                    <div class="flex text-[#d4af37] mb-6 text-xs gap-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic mb-6 text-lg font-serif">"Очень стильная вещь. Села идеально. Доставка была быстрой, упаковка надежная. Рекомендую!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-[#222] text-white rounded-full flex items-center justify-center font-bold border border-[#d4af37]">А</div>
+                        <div>
+                            <p class="text-white font-bold text-sm">Алина К.</p>
+                            <p class="text-xs text-gray-500">WB Клиент</p>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Review 3 -->
+                 <div class="min-w-[300px] md:min-w-[400px] bg-[#121212] p-8 border border-white/5 snap-center">
+                    <div class="flex text-[#d4af37] mb-6 text-xs gap-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic mb-6 text-lg font-serif">"Брал в подарок, получатель в восторге. Соответствует фото на 100%. Спасибо продавцу."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-[#d4af37] rounded-full flex items-center justify-center text-black font-bold">С</div>
+                        <div>
+                            <p class="text-white font-bold text-sm">Сергей П.</p>
+                            <p class="text-xs text-gray-500">WB Клиент</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-[#0a0a0a] border-t border-white/5">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-3xl text-white serif-font text-center mb-12">Вопросы и ответы</h2>
+            
+            <div class="space-y-4">
+                <div class="bg-[#121212] border border-white/5 rounded-sm overflow-hidden">
+                    <button class="w-full text-left px-6 py-5 flex justify-between items-center focus:outline-none faq-btn">
+                        <span class="text-white font-medium">Как подобрать размер?</span>
+                        <i class="fas fa-plus text-[#d4af37] transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-gray-400 text-sm leading-relaxed faq-content border-t border-white/5 pt-4">
+                        Рекомендуем ориентироваться на таблицу размеров в карточке товара. Изделия идут размер в размер, но если вы предпочитаете оверсайз — берите на размер больше.
+                    </div>
+                </div>
+                
+                <div class="bg-[#121212] border border-white/5 rounded-sm overflow-hidden">
+                    <button class="w-full text-left px-6 py-5 flex justify-between items-center focus:outline-none faq-btn">
+                        <span class="text-white font-medium">Правила ухода</span>
+                        <i class="fas fa-plus text-[#d4af37] transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-gray-400 text-sm leading-relaxed faq-content border-t border-white/5 pt-4">
+                        Бережная стирка при 30°C. Не использовать отбеливатели. Сушить в расправленном виде.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Footer -->
+    <footer class="py-24 bg-black text-center relative">
+        <div class="absolute inset-0 bg-[url('https://basket-12.wbbasket.ru/vol1685/part168550/168550639/images/big/12.webp')] bg-cover bg-center opacity-20 grayscale mix-blend-overlay"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-4xl md:text-6xl text-white serif-font mb-8">Ваш стиль.<br>Ваши правила.</h2>
+            <a href="https://www.wildberries.ru/catalog/168550639/detail.aspx?targetUrl=MI" class="inline-block btn-gold px-16 py-5 rounded-sm font-bold text-sm uppercase tracking-[0.2em] shadow-2xl transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition duration-300">
+                Заказать на Wildberries
+            </a>
+            <div class="mt-12 text-gray-600 text-xs uppercase tracking-widest">
+                © 2024 Noir Edition. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu');
+        const menu = document.getElementById('mobile-menu');
+
+        function toggleMenu() {
+            menu.classList.toggle('translate-x-full');
+        }
+
+        mobileBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+
+        // FAQ
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                
+                if (content.classList.contains('hidden')) {
+                    icon.classList.remove('fa-minus');
+                    icon.classList.add('fa-plus');
+                } else {
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-minus');
+                }
+            });
+        });
+
+        // Review Scroll
+        const scrollContainer = document.getElementById('reviews-scroll');
+        document.getElementById('prev-review').addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -350, behavior: 'smooth' });
+        });
+        document.getElementById('next-review').addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: 350, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

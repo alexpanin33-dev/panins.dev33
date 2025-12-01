@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Style - Wildberries Exclusive</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syncopate:wght@400;700&display=swap');
+        
+        :root {
+            --accent: #ff3e00;
+            --dark: #121212;
+            --light: #f4f4f0;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Syncopate', sans-serif;
+        }
+
+        /* Brutalist Utilities */
+        .brutal-border {
+            border: 2px solid var(--dark);
+            box-shadow: 4px 4px 0px var(--dark);
+            transition: all 0.2s ease;
+        }
+        
+        .brutal-border:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--dark);
+        }
+        
+        .brutal-btn {
+            background-color: var(--dark);
+            color: white;
+            border: 2px solid var(--dark);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .brutal-btn:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 6px 6px 0px var(--dark);
+            transform: translate(-4px, -4px);
+            color: white;
+        }
+
+        .brutal-card {
+            background: white;
+            border: 2px solid var(--dark);
+            position: relative;
+        }
+
+        /* Marquee */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image Hover Effect */
+        .hover-swap {
+            position: relative;
+        }
+        .hover-swap img:last-child {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .hover-swap:hover img:last-child {
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--light);
+            border-left: 2px solid var(--dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--dark);
+            border: 2px solid var(--light);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Preloader Overlay (simulated) -->
+    <div class="fixed inset-0 bg-[#ff3e00] z-[60] flex items-center justify-center transition-all duration-1000 pointer-events-none" id="loader">
+        <div class="text-white text-4xl font-bold brand-font animate-pulse">LOADING...</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-[#f4f4f0] border-b-2 border-black">
+        <div class="container mx-auto px-4 md:px-8 h-20 flex justify-between items-center">
+            <div class="text-2xl md:text-3xl font-bold brand-font tracking-tighter flex items-center gap-2">
+                <span class="bg-black text-white px-2 py-1">WB</span>
+                <span>DROP</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-12 font-bold text-sm tracking-widest uppercase">
+                <a href="#product" class="hover:text-[#ff3e00] transition-colors decoration-2 underline-offset-4 hover:underline">Товар</a>
+                <a href="#details" class="hover:text-[#ff3e00] transition-colors decoration-2 underline-offset-4 hover:underline">Детали</a>
+                <a href="#reviews" class="hover:text-[#ff3e00] transition-colors decoration-2 underline-offset-4 hover:underline">Отзывы</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="https://www.wildberries.ru/catalog/444388218/detail.aspx?targetUrl=MI" target="_blank" class="hidden md:inline-flex items-center justify-center px-8 py-3 text-sm font-bold uppercase tracking-wider brutal-btn">
+                    Купить
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-3xl border-2 border-black p-1 hover:bg-black hover:text-white transition">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden fixed top-20 left-0 w-full bg-[#f4f4f0] border-b-2 border-black p-6 flex-col space-y-6 text-center md:hidden z-40">
+            <a href="#product" class="block text-2xl font-bold uppercase">Товар</a>
+            <a href="#details" class="block text-2xl font-bold uppercase">Детали</a>
+            <a href="#reviews" class="block text-2xl font-bold uppercase">Отзывы</a>
+            <a href="https://www.wildberries.ru/catalog/444388218/detail.aspx?targetUrl=MI" target="_blank" class="block bg-[#ff3e00] text-white py-4 font-bold text-xl border-2 border-black shadow-[4px_4px_0px_black] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all">КУПИТЬ СЕЙЧАС</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 md:pt-40 min-h-screen flex flex-col" id="product">
+        <div class="container mx-auto px-4 md:px-8 flex-grow">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                
+                <!-- Text Content -->
+                <div class="lg:w-1/2 order-2 lg:order-1 relative z-10">
+                    <div class="inline-block bg-[#ff3e00] text-white px-4 py-2 font-bold text-sm mb-6 border-2 border-black shadow-[4px_4px_0px_black]">
+                        NEW ARRIVAL // 2024
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl xl:text-8xl font-black leading-[0.9] mb-8 uppercase">
+                        Urban <br>
+                        <span class="text-transparent bg-clip-text bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center">Legend</span> <br>
+                        Series
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-gray-800 mb-10 max-w-md font-medium border-l-4 border-[#ff3e00] pl-6">
+                        Абсолютный комфорт и дерзкий стиль. Создан для тех, кто не боится быть в центре внимания.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <a href="https://www.wildberries.ru/catalog/444388218/detail.aspx?targetUrl=MI" target="_blank" class="group relative px-10 py-5 bg-black text-white font-bold text-xl uppercase tracking-wider border-2 border-black hover:bg-[#ff3e00] hover:border-[#ff3e00] transition-all shadow-[6px_6px_0px_#888] hover:shadow-[6px_6px_0px_black] hover:-translate-y-1 flex items-center justify-center gap-3">
+                            <span>На Wildberries</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                        <a href="#details" class="px-10 py-5 bg-transparent text-black font-bold text-xl uppercase tracking-wider border-2 border-black hover:bg-black hover:text-white transition-all flex items-center justify-center">
+                            Обзор
+                        </a>
+                    </div>
+
+                    <!-- Trust Badge -->
+                    <div class="mt-12 flex items-center gap-4 opacity-80">
+                        <div class="flex -space-x-3">
+                            <div class="w-10 h-10 rounded-full border-2 border-black bg-gray-300"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-black bg-gray-400"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-black bg-gray-500 flex items-center justify-center text-xs font-bold">+5k</div>
+                        </div>
+                        <div class="text-sm font-bold uppercase">уже купили <br>в этом сезоне</div>
+                    </div>
+                </div>
+
+                <!-- Hero Image with Glitch/Style -->
+                <div class="lg:w-1/2 order-1 lg:order-2 relative">
+                    <div class="relative z-10 brutal-border bg-white p-4 rotate-2 hover:rotate-0 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 z-20 bg-black text-white px-3 py-1 font-bold text-xl rounded-full aspect-square flex items-center justify-center w-20 h-20 -rotate-12 border-2 border-white shadow-lg">
+                            <span>HIT!</span>
+                        </div>
+                        <img src="https://basket-25.wbbasket.ru/vol4443/part444388/444388218/images/big/1.webp" alt="Product" class="w-full h-auto object-cover grayscale-0 hover:grayscale transition duration-500">
+                        
+                        <!-- Decor Elements -->
+                        <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiMwMDAiLz48L3N2Zz4=')] opacity-50 -z-10"></div>
+                    </div>
+                    <div class="absolute top-10 right-10 w-full h-full border-4 border-[#ff3e00] -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Running Line -->
+    <div class="py-6 bg-black border-y-4 border-[#ff3e00] mt-20 rotate-1 scale-105 shadow-xl">
+        <div class="marquee-container">
+            <div class="marquee-content text-white font-bold text-2xl md:text-4xl uppercase tracking-widest brand-font">
+                <span class="mx-8 text-[#ff3e00]">★</span> ORIGINAL QUALITY
+                <span class="mx-8 text-[#ff3e00]">★</span> FAST DELIVERY
+                <span class="mx-8 text-[#ff3e00]">★</span> BEST CHOICE
+                <span class="mx-8 text-[#ff3e00]">★</span> LIMITED DROP
+                <span class="mx-8 text-[#ff3e00]">★</span> ORIGINAL QUALITY
+                <span class="mx-8 text-[#ff3e00]">★</span> FAST DELIVERY
+                <span class="mx-8 text-[#ff3e00]">★</span> BEST CHOICE
+                <span class="mx-8 text-[#ff3e00]">★</span> LIMITED DROP
+            </div>
+        </div>
+    </div>
+
+    <!-- Bento Grid Features -->
+    <section id="details" class="py-24 px-4 md:px-8">
+        <div class="container mx-auto max-w-7xl">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b-4 border-black pb-6">
+                <h2 class="text-4xl md:text-6xl font-black uppercase">Детали <span class="text-[#ff3e00]">&</span><br>Преимущества</h2>
+                <p class="text-right max-w-xs font-bold mt-4 md:mt-0">ТЕХНОЛОГИИ И СТИЛЬ<br>В КАЖДОМ ЭЛЕМЕНТЕ</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="brutal-card p-8 flex flex-col justify-between min-h-[300px] md:col-span-1 group hover:bg-black hover:text-white transition-colors duration-300">
+                    <i class="fas fa-ruler-combined text-5xl mb-4 text-[#ff3e00]"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold uppercase mb-2">Идеальный крой</h3>
+                        <p class="text-sm opacity-80">Разработано с учетом анатомических особенностей для максимальной свободы движений.</p>
+                    </div>
+                    <div class="mt-4 text-right text-4xl font-black opacity-10 group-hover:opacity-30">01</div>
+                </div>
+
+                <!-- Card 2 (Image) -->
+                <div class="brutal-card md:col-span-2 min-h-[300px] overflow-hidden group">
+                    <img src="https://basket-25.wbbasket.ru/vol4443/part444388/444388218/images/big/2.webp" class="w-full h-full object-cover object-top transition duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <span class="text-white text-3xl font-bold border-2 border-white px-6 py-2 uppercase tracking-widest">Zoom View</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 (Image) -->
+                <div class="brutal-card md:col-span-2 min-h-[300px] overflow-hidden group order-4 md:order-3">
+                    <img src="https://basket-25.wbbasket.ru/vol4443/part444388/444388218/images/big/3.webp" class="w-full h-full object-cover object-top transition duration-700 group-hover:scale-110">
+                    <div class="absolute bottom-0 left-0 bg-white border-t-2 border-r-2 border-black p-4 z-10">
+                        <p class="font-bold uppercase text-xs text-gray-500">Material</p>
+                        <p class="font-bold text-xl">PREMIUM COTTON</p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="brutal-card p-8 flex flex-col justify-between min-h-[300px] md:col-span-1 order-3 md:order-4 bg-[#ff3e00] text-white border-black">
+                    <i class="fas fa-shield-alt text-5xl mb-4 text-black"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold uppercase mb-2">Долговечность</h3>
+                        <p class="text-sm opacity-90 font-medium">Ткань устойчива к стиркам, не теряет цвет и форму даже после сезона активной носки.</p>
+                    </div>
+                    <div class="mt-4 text-right text-4xl font-black opacity-30 text-black">02</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (Accordion) -->
+    <section class="py-20 bg-white border-y-2 border-black">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl md:text-5xl font-black uppercase text-center mb-12">Вопрос / Ответ</h2>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border-2 border-black bg-[#f4f4f0]">
+                    <details class="group">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
+                            <span class="font-bold text-lg uppercase">Как подобрать размер?</span>
+                            <span class="bg-black text-white w-8 h-8 flex items-center justify-center font-bold transition-transform group-open:rotate-45">+</span>
+                        </summary>
+                        <div class="px-6 pb-6 pt-0 text-gray-700 font-medium">
+                            В карточке товара на Wildberries представлена подробная таблица размеров. Рекомендуем измерить свои параметры перед заказом. Товар идет размер в размер (True to size).
+                        </div>
+                    </details>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="border-2 border-black bg-[#f4f4f0]">
+                    <details class="group">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
+                            <span class="font-bold text-lg uppercase">Сколько ждать доставку?</span>
+                            <span class="bg-black text-white w-8 h-8 flex items-center justify-center font-bold transition-transform group-open:rotate-45">+</span>
+                        </summary>
+                        <div class="px-6 pb-6 pt-0 text-gray-700 font-medium">
+                            Доставка осуществляется со склада Wildberries. Обычно это занимает от 1 до 3 дней в зависимости от вашего региона проживания.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="border-2 border-black bg-[#f4f4f0]">
+                    <details class="group">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
+                            <span class="font-bold text-lg uppercase">Возможен ли возврат?</span>
+                            <span class="bg-black text-white w-8 h-8 flex items-center justify-center font-bold transition-transform group-open:rotate-45">+</span>
+                        </summary>
+                        <div class="px-6 pb-6 pt-0 text-gray-700 font-medium">
+                            Да, вы можете примерить вещь в пункте выдачи. Если она вам не подойдет, можно сразу оформить возврат на месте бесплатно.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Scroller -->
+    <section id="reviews" class="py-24 overflow-hidden">
+        <div class="container mx-auto px-4 mb-12 flex justify-between items-end">
+            <h2 class="text-4xl font-black uppercase">Мнения</h2>
+            <div class="text-xl font-bold border-2 border-black px-4 py-1 bg-[#ff3e00] text-white">4.9/5.0</div>
+        </div>
+        
+        <div class="flex gap-6 overflow-x-auto pb-8 px-4 snap-x w-full md:justify-center">
+            <!-- Review 1 -->
+            <div class="min-w-[300px] md:w-[350px] flex-shrink-0 brutal-card p-6 snap-center">
+                <div class="flex text-[#ff3e00] mb-4 text-sm">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="font-bold text-lg mb-4">"Это просто пушка!"</p>
+                <p class="text-gray-600 text-sm mb-6">Качество материала на высоте, очень приятный к телу. Сидит идеально, как на фото. Однозначно рекомендую.</p>
+                <div class="flex items-center gap-3 border-t-2 border-gray-200 pt-4">
+                    <div class="w-8 h-8 bg-black rounded-full text-white flex items-center justify-center font-bold">А</div>
+                    <span class="font-bold text-sm uppercase">Алексей В.</span>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="min-w-[300px] md:w-[350px] flex-shrink-0 brutal-card p-6 snap-center bg-black text-white">
+                <div class="flex text-[#ff3e00] mb-4 text-sm">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="font-bold text-lg mb-4">"Стильно и удобно"</p>
+                <p class="text-gray-400 text-sm mb-6">Заказывала парню, он в восторге. После стирки не село, цвет остался таким же ярким. Доставка за 2 дня.</p>
+                <div class="flex items-center gap-3 border-t-2 border-gray-700 pt-4">
+                    <div class="w-8 h-8 bg-white rounded-full text-black flex items-center justify-center font-bold">М</div>
+                    <span class="font-bold text-sm uppercase">Мария К.</span>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="min-w-[300px] md:w-[350px] flex-shrink-0 brutal-card p-6 snap-center">
+                <div class="flex text-[#ff3e00] mb-4 text-sm">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="font-bold text-lg mb-4">"Топ за свои деньги"</p>
+                <p class="text-gray-600 text-sm mb-6">Взял сразу два цвета. Отличная базовая вещь в гардероб. Размерная сетка точная.</p>
+                <div class="flex items-center gap-3 border-t-2 border-gray-200 pt-4">
+                    <div class="w-8 h-8 bg-black rounded-full text-white flex items-center justify-center font-bold">Д</div>
+                    <span class="font-bold text-sm uppercase">Дмитрий С.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Footer -->
+    <footer class="bg-black text-white pt-20 pb-10 border-t-4 border-[#ff3e00] relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-5xl md:text-8xl font-black uppercase leading-none mb-8 hover:text-stroke transition-all">Don't Miss<br>The Drop</h2>
+            <p class="text-gray-400 mb-12 text-xl max-w-2xl mx-auto">Количество товара ограничено. Успей заказать свой размер по специальной цене.</p>
+            
+            <a href="https://www.wildberries.ru/catalog/444388218/detail.aspx?targetUrl=MI" target="_blank" class="inline-block px-12 py-6 bg-[#ff3e00] text-white font-bold text-2xl uppercase tracking-widest border-2 border-[#ff3e00] hover:bg-white hover:text-[#ff3e00] transition-all shadow-[0_0_30px_rgba(255,62,0,0.6)] animate-bounce">
+                Перейти на Wildberries
+            </a>
+
+            <div class="mt-20 pt-10 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+                <div class="mb-4 md:mb-0 font-bold">WB DROP © 2024</div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white">INSTAGRAM</a>
+                    <a href="#" class="hover:text-white">TELEGRAM</a>
+                    <a href="#" class="hover:text-white">VKONTAKTE</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Preloader Fade Out
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 1000);
+            }, 500);
+        });
+
+        // Mobile Menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const links = menu.querySelectorAll('a');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            // Toggle icon
+            const icon = btn.querySelector('i');
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+                btn.querySelector('i').classList.remove('fa-times');
+                btn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

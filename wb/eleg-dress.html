@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive Collection - WB Edition</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+        
+        :root {
+            --bg-color: #f9f8f6;
+            --text-color: #2c2c2c;
+            --accent-color: #d6c0b3;
+            --secondary-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Mulish', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Smooth Fade In Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Button Hover */
+        .btn-elegant {
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-elegant::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.5s;
+        }
+        
+        .btn-elegant:hover::after {
+            left: 100%;
+        }
+
+        /* Image Hover Zoom */
+        .img-zoom-container {
+            overflow: hidden;
+        }
+        
+        .img-zoom-container img {
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .img-zoom-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-[#f9f8f6]/80 backdrop-blur-md border-b border-gray-200/50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="#" class="text-2xl serif-font font-bold tracking-wide text-gray-900">
+                ESSENTIALS<span class="text-gray-400 text-xs align-top ml-1">®</span>
+            </a>
+            
+            <div class="hidden md:flex space-x-10 text-sm tracking-widest uppercase font-semibold text-gray-600">
+                <a href="#collection" class="hover:text-black transition-colors relative group">
+                    Обзор
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#details" class="hover:text-black transition-colors relative group">
+                    Детали
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#reviews" class="hover:text-black transition-colors relative group">
+                    Отзывы
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="https://www.wildberries.ru/catalog/187663412/detail.aspx?targetUrl=MI" class="hidden md:inline-block bg-gray-900 text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gray-700 transition shadow-lg hover:shadow-xl btn-elegant">
+                    Купить на WB
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-800">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#f9f8f6] z-40 flex flex-col items-center justify-center space-y-8 transform translate-x-full transition-transform duration-500 ease-in-out md:hidden">
+            <button id="close-menu" class="absolute top-6 right-6 text-3xl text-gray-500 hover:text-black">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="#collection" class="text-3xl serif-font text-gray-800" onclick="toggleMenu()">Обзор</a>
+            <a href="#details" class="text-3xl serif-font text-gray-800" onclick="toggleMenu()">Детали</a>
+            <a href="#reviews" class="text-3xl serif-font text-gray-800" onclick="toggleMenu()">Отзывы</a>
+            <a href="https://www.wildberries.ru/catalog/187663412/detail.aspx?targetUrl=MI" class="bg-gray-900 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest shadow-xl mt-8">
+                Перейти в магазин
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-20 min-h-screen flex items-center" id="collection">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+                
+                <!-- Text Content -->
+                <div class="lg:w-5/12 order-2 lg:order-1 fade-in-up delay-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="h-[1px] w-12 bg-gray-400"></span>
+                        <span class="text-sm uppercase tracking-[0.2em] text-gray-500 font-semibold">New Season 2024</span>
+                    </div>
+                    
+                    <h1 class="text-5xl lg:text-7xl font-medium leading-tight mb-8 text-gray-900">
+                        <span class="italic text-gray-500">Pure</span> Elegance <br>
+                        & Comfort.
+                    </h1>
+                    
+                    <p class="text-lg text-gray-600 leading-relaxed mb-10 font-light">
+                        Создано для тех, кто ценит безупречный стиль и качество. Наша новая коллекция объединяет современные тренды и классический комфорт.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <a href="https://www.wildberries.ru/catalog/187663412/detail.aspx?targetUrl=MI" target="_blank" class="px-10 py-4 bg-gray-900 text-white rounded-full font-medium text-sm uppercase tracking-widest hover:bg-gray-800 transition shadow-lg btn-elegant flex items-center justify-center gap-3 group">
+                            <span>Заказать Сейчас</span>
+                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#details" class="px-10 py-4 bg-transparent border border-gray-300 text-gray-900 rounded-full font-medium text-sm uppercase tracking-widest hover:border-gray-900 transition flex items-center justify-center">
+                            Узнать больше
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="mt-16 flex gap-12 border-t border-gray-200 pt-8">
+                        <div>
+                            <p class="text-3xl serif-font font-bold text-gray-900">4.9</p>
+                            <p class="text-xs uppercase tracking-widest text-gray-500 mt-1">Рейтинг</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl serif-font font-bold text-gray-900">15k+</p>
+                            <p class="text-xs uppercase tracking-widest text-gray-500 mt-1">Продаж</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl serif-font font-bold text-gray-900">100%</p>
+                            <p class="text-xs uppercase tracking-widest text-gray-500 mt-1">Качество</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Images Composition -->
+                <div class="lg:w-7/12 order-1 lg:order-2 relative fade-in-up">
+                    <!-- Main Image -->
+                    <div class="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl aspect-[3/4] lg:w-[80%] ml-auto img-zoom-container">
+                        <img src="https://basket-12.wbbasket.ru/vol1876/part187663/187663412/images/big/3.webp" alt="Fashion Model" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Floating Secondary Image -->
+                    <div class="absolute -bottom-10 -left-4 lg:-left-10 w-48 lg:w-64 aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border-4 border-[#f9f8f6] z-20 img-zoom-container hidden sm:block">
+                        <img src="https://basket-12.wbbasket.ru/vol1876/part187663/187663412/images/big/1.webp" alt="Detail View" class="w-full h-full object-cover">
+                    </div>
+
+                    <!-- Decor Circle -->
+                    <div class="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-[#d6c0b3]/20 blur-3xl -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Philosophy / Details Section -->
+    <section id="details" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 max-w-2xl mx-auto fade-in-up">
+                <h2 class="text-4xl lg:text-5xl serif-font mb-6 text-gray-900">Внимание к деталям</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Мы верим, что истинный стиль кроется в мелочах. Каждый шов, каждая пуговица и каждый сантиметр ткани подобраны так, чтобы дарить вам комфорт и уверенность.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Feature 1 (Large Image) -->
+                <div class="lg:col-span-8 rounded-3xl overflow-hidden h-[400px] lg:h-[600px] relative group shadow-lg fade-in-up">
+                    <img src="https://basket-12.wbbasket.ru/vol1876/part187663/187663412/images/big/2.webp" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-8">
+                        <div class="text-white">
+                            <h3 class="text-2xl font-medium serif-font mb-2">Премиальные материалы</h3>
+                            <p class="text-white/80 font-light">Приятная к телу ткань, сохраняющая форму.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2 & 3 (Stacked) -->
+                <div class="lg:col-span-4 flex flex-col gap-8">
+                    <div class="flex-1 bg-[#f9f8f6] rounded-3xl p-8 flex flex-col justify-center items-start hover:shadow-md transition fade-in-up delay-100">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-gray-900 mb-6 text-xl">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <h3 class="text-xl serif-font font-semibold mb-3">Идеальная посадка</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Лекала разработаны с учетом особенностей фигуры для максимального удобства.</p>
+                    </div>
+
+                    <div class="flex-1 rounded-3xl overflow-hidden relative h-[250px] lg:h-auto shadow-lg group fade-in-up delay-200">
+                        <img src="https://basket-12.wbbasket.ru/vol1876/part187663/187663412/images/big/4.webp" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Slider (Horizontal Scroll) -->
+    <section id="reviews" class="py-24 bg-[#f9f8f6] overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-16">
+                <h2 class="text-4xl lg:text-5xl serif-font text-gray-900">Отзывы клиентов</h2>
+                <div class="flex gap-2">
+                    <button class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-900 hover:text-white hover:border-gray-900 transition" id="scroll-left">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-900 hover:text-white hover:border-gray-900 transition" id="scroll-right">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex gap-6 overflow-x-auto pb-8 snap-x scrollbar-hide" id="reviews-container" style="scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;">
+                <!-- Review Card 1 -->
+                <div class="min-w-[350px] md:w-[400px] flex-shrink-0 bg-white p-10 rounded-2xl shadow-sm snap-center border border-gray-100">
+                    <div class="flex text-[#d6c0b3] mb-6 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <h4 class="text-xl serif-font font-medium mb-4">"Восторг!"</h4>
+                    <p class="text-gray-500 leading-relaxed mb-8 font-light">
+                        Очень качественная вещь. Ткань плотная, но мягкая. Цвет полностью соответствует фото. Село идеально, размер в размер.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-serif text-gray-600">Е</div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900">Елена С.</p>
+                            <p class="text-xs text-gray-400">Куплено на WB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 2 -->
+                <div class="min-w-[350px] md:w-[400px] flex-shrink-0 bg-white p-10 rounded-2xl shadow-sm snap-center border border-gray-100">
+                    <div class="flex text-[#d6c0b3] mb-6 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <h4 class="text-xl serif-font font-medium mb-4">"Любовь с первого взгляда"</h4>
+                    <p class="text-gray-500 leading-relaxed mb-8 font-light">
+                        Заказала на свой страх и риск, но не пожалела. Выглядит намного дороже своей цены. Стильно, модно, удобно.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-serif text-gray-600">А</div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900">Анна М.</p>
+                            <p class="text-xs text-gray-400">Куплено на WB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 3 -->
+                <div class="min-w-[350px] md:w-[400px] flex-shrink-0 bg-white p-10 rounded-2xl shadow-sm snap-center border border-gray-100">
+                    <div class="flex text-[#d6c0b3] mb-6 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <h4 class="text-xl serif-font font-medium mb-4">"Рекомендую"</h4>
+                    <p class="text-gray-500 leading-relaxed mb-8 font-light">
+                        Отличный пошив, нитки не торчат. Доставка быстрая. Уже присмотрела еще одну модель в другом цвете.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-serif text-gray-600">О</div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900">Ольга К.</p>
+                            <p class="text-xs text-gray-400">Куплено на WB</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white border-t border-gray-100">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-3xl lg:text-4xl serif-font text-center mb-12 text-gray-900">Частые вопросы</h2>
+            
+            <div class="space-y-4">
+                <div class="border-b border-gray-200 pb-4">
+                    <button class="w-full text-left flex justify-between items-center py-4 focus:outline-none group faq-btn">
+                        <span class="text-lg font-medium text-gray-800">Соответствует ли размер?</span>
+                        <i class="fas fa-plus text-gray-400 font-light group-hover:text-gray-900 transition-transform duration-300"></i>
+                    </button>
+                    <div class="hidden pt-2 pb-4 text-gray-500 font-light leading-relaxed faq-content">
+                        Да, наши изделия отшиваются строго по размерной сетке. Рекомендуем ориентироваться на таблицу размеров в карточке товара на Wildberries.
+                    </div>
+                </div>
+                
+                <div class="border-b border-gray-200 pb-4">
+                    <button class="w-full text-left flex justify-between items-center py-4 focus:outline-none group faq-btn">
+                        <span class="text-lg font-medium text-gray-800">Как ухаживать за изделием?</span>
+                        <i class="fas fa-plus text-gray-400 font-light group-hover:text-gray-900 transition-transform duration-300"></i>
+                    </button>
+                    <div class="hidden pt-2 pb-4 text-gray-500 font-light leading-relaxed faq-content">
+                        Рекомендуется деликатная стирка при температуре не выше 30 градусов. Не отбеливать. Гладить при низкой температуре.
+                    </div>
+                </div>
+                
+                <div class="border-b border-gray-200 pb-4">
+                    <button class="w-full text-left flex justify-between items-center py-4 focus:outline-none group faq-btn">
+                        <span class="text-lg font-medium text-gray-800">Есть ли возврат?</span>
+                        <i class="fas fa-plus text-gray-400 font-light group-hover:text-gray-900 transition-transform duration-300"></i>
+                    </button>
+                    <div class="hidden pt-2 pb-4 text-gray-500 font-light leading-relaxed faq-content">
+                        Безусловно. Вы можете проверить товар в пункте выдачи Wildberries и отказаться, если он вам не подойдет. Это бесплатно.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gray-900 text-white text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://basket-12.wbbasket.ru/vol1876/part187663/187663412/images/big/1.webp')] bg-cover bg-center opacity-20"></div>
+        <div class="absolute inset-0 bg-black/60"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 max-w-2xl">
+            <h2 class="text-4xl lg:text-6xl serif-font mb-6">Обновите свой гардероб</h2>
+            <p class="text-gray-300 mb-10 text-lg font-light">Лимитированная коллекция уже в продаже. Успейте заказать свой размер.</p>
+            <a href="https://www.wildberries.ru/catalog/187663412/detail.aspx?targetUrl=MI" class="inline-block bg-white text-gray-900 px-12 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-gray-200 transition shadow-xl transform hover:-translate-y-1">
+                Купить на Wildberries
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#f9f8f6] py-12 border-t border-gray-200">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-xl serif-font font-bold text-gray-900">ESSENTIALS<span class="text-xs align-top">®</span></div>
+            <div class="text-gray-500 text-sm">© 2024 Все права защищены.</div>
+            <div class="flex gap-6">
+                <a href="#" class="text-gray-400 hover:text-gray-900 transition"><i class="fab fa-instagram text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-gray-900 transition"><i class="fab fa-vk text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-gray-900 transition"><i class="fab fa-telegram text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal Animation on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+        // Mobile Menu Logic
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu');
+        const menu = document.getElementById('mobile-menu');
+
+        function toggleMenu() {
+            const isHidden = menu.classList.contains('translate-x-full');
+            if (isHidden) {
+                menu.classList.remove('translate-x-full');
+            } else {
+                menu.classList.add('translate-x-full');
+            }
+        }
+
+        mobileBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                
+                if (content.classList.contains('hidden')) {
+                    icon.classList.remove('fa-minus');
+                    icon.classList.add('fa-plus');
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-minus');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Reviews Scroll
+        const scrollContainer = document.getElementById('reviews-container');
+        document.getElementById('scroll-left').addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+        document.getElementById('scroll-right').addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
